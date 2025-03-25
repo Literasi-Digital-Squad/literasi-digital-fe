@@ -10,6 +10,9 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-primary: #F57C00;
+  --color-secondary: #0056D2;
+  --font-poppins: "Poppins", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
