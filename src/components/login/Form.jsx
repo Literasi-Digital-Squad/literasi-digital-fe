@@ -1,3 +1,4 @@
+import Link from "next/link"
 export default function Form() {
     return (
         <div className="relative h-screen w-screen flex justify-between font-poppins">
@@ -16,13 +17,12 @@ export default function Form() {
                                 <input type="text" className="p-4 rounded-lg w-full border border-[#D1D1D1]" placeholder="Masukkan Password Anda" />
                                 <p className=" text-[#4285F4] text-end text-sm">Forgot Password</p>
                             </div>
-                            <button type="submit" className="w-full p-4 text-center text-lg items-center justify-center gap-3 text-white bg-primary shadow-2xl rounded-2xl flex">
+                            <Link href="/admin/pertanyaan" className="w-full p-4 text-center text-lg items-center justify-center gap-3 text-white bg-primary shadow-2xl rounded-2xl flex cursor-pointer">
                                 <p>Masuk</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="size-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                                 </svg>
-
-                            </button>
+                            </Link>
                         </div>
                     </form>
                     <img src="/assets/login/graphic.png" alt="" className="h-full" />

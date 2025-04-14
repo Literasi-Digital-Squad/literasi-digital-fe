@@ -1,13 +1,14 @@
+import Link from "next/link"
 export default function ListLevel() {
     return (
         <div className="px-5 py-7 overflow-y-scroll h-[80%]">
             <p className="text-2xl font-bold">Level Literasi</p>
             <div className="flex space-x-1 text-sm items-center">
-                <p className=" text-[#9CA3AF]">Master Data</p>
+                <p className=" text-[#9CA3AF]">Pertanyaan</p>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-3 text-[#9CA3AF]">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                 </svg>
-                <p>Level</p>
+                <p>Level Literasi</p>
             </div>
             <div className="overflow-hidden rounded-lg shadow-lg mx-5 mt-7">
                 <table className="w-full border-collapse bg-white text-left text-sm text-gray-600">
@@ -25,12 +26,12 @@ export default function ListLevel() {
                             <td className="px-4 py-3">Pernah tahu produk teknologi tingkat dasar, tapi belum pernah pakai atau sangat jarang menggunakan</td>
                             <td className="px-4 py-5 text-center">100</td>
                             <td className="px-4 py-3">
-                                <button type="button" className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg">
+                                <Link href="/admin/pertanyaan/level-1" className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg">
                                     <p>Detail</p>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                                     </svg>
-                                </button>
+                                </Link>
                             </td>
                         </tr>
                         <tr className="hover:bg-gray-100 odd:bg-gray-100 even:bg-white">
@@ -38,12 +39,12 @@ export default function ListLevel() {
                             <td className="px-4 py-3">Paham produk teknologi tingkat dasar, dan sudah menggunakan meskipun jarang</td>
                             <td className="px-4 py-5 text-center">100</td>
                             <td className="px-4 py-3">
-                                <button type="button" className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg">
+                                <Link href="/admin/pertanyaan/level-2" className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg">
                                     <p>Detail</p>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                                     </svg>
-                                </button>
+                                </Link>
                             </td>
                         </tr>
                         <tr className="hover:bg-gray-100 odd:bg-gray-100 even:bg-white">
@@ -51,12 +52,12 @@ export default function ListLevel() {
                             <td className="px-4 py-3">Paham produk teknologi tingkat dasar, dan sudah menggunakan secara regular/harian</td>
                             <td className="px-4 py-5 text-center">100</td>
                             <td className="px-4 py-3">
-                                <button type="button" className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg">
+                                <Link href="/admin/pertanyaan/level-3" className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg">
                                     <p>Detail</p>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                                     </svg>
-                                </button>
+                                </Link>
                             </td>
                         </tr>
                     </tbody>

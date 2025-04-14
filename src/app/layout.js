@@ -8,9 +8,9 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "DOME PDU - Drilling Online Monitoring Environment",
+  title: "Cakap Digital",
   description:
-    "Platform pemantauan pengeboran secara online yang menyediakan data real-time dan analisis untuk meningkatkan efisiensi dan keamanan operasional pengeboran.",
+    "Website asesmen digital untuk mengenal tingkat literasi digital anda",
 };
 
 export default function RootLayout({ children }) {

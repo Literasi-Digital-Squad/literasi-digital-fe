@@ -8,7 +8,7 @@ export default function Sidebar({ isActive }) {
                 <p className="text-secondary font-bold text-xl">Cakap Digital</p>
             </div>
             <div className="pt-5">
-                <Link href="/admin/dashboard" className={`flex space-x-5 py-3 px-5 items-center text-lg ${isActive === "/admin/dashboard" ? "text-secondary font-bold border-l-4 border-secondary bg-[#ECF9FF]" : "text-black"}`}>
+                <Link href="/admin/dashboard" className={`flex space-x-5 py-3 px-5 items-center text-lg ${isActive === "dashboard" ? "text-secondary font-bold border-l-4 border-secondary bg-[#ECF9FF]" : "text-black"}`}>
                     <img src="/assets/admin/dashboard-icon.svg" alt="" className="size-6" />
                     <p>Dashboard</p>
                 </Link>
@@ -18,16 +18,18 @@ export default function Sidebar({ isActive }) {
                     </svg>
                     <p>Master Data</p>
                 </div>
-                <Link href="/admin/level" className={`flex space-x-5 mx-5 my-2 px-5 py-2 items-center rounded-md ${isActive === "/admin/level" ? "bg-[#ECF9FF] font-bold" : "text-black"}`}>
+                <Link href="/admin/level" className={`flex space-x-5 mx-5 my-2 px-5 py-2 items-center rounded-md ${isActive === "level" ? "bg-[#ECF9FF] font-bold" : "text-black"}`}>
                     <div className="w-2 h-2 rounded-full bg-secondary" />
                     <div>Level</div>
                 </Link>
-                <Link href="/admin/pertanyaan" className={`flex space-x-5 py-3 px-5 items-center text-lg ${isActive === "/admin/pertanyaan" ? "text-secondary font-bold border-l-2 border-secondary bg-[#ECF9FF]" : "text-black"}`}>
+                <Link href="/admin/pertanyaan" className={`flex space-x-5 py-3 px-5 items-center text-lg ${isActive === "pertanyaan" ? "text-secondary font-bold border-l-2 border-secondary bg-[#ECF9FF]" : "text-black"}`}>
                     <img src="/assets/admin/pertanyaan-icon.svg" alt="" />
                     <p>Pertanyaan</p>
                 </Link>
-                <Link href="/admin/rekap-jawaban" className={`flex space-x-5 py-3 px-5 items-center text-lg ${isActive === "/admin/rekap-jawaban" ? "text-secondary font-bold border-l-2 border-secondary bg-[#ECF9FF]" : "text-black"}`}>
-                    <img src="/assets/admin/jawaban-icon.svg" alt="" className="size-6" />
+                <Link href="/admin/rekap-jawaban" className={`flex space-x-5 py-3 px-5 items-center text-lg ${isActive === "rekap-jawaban" ? "text-secondary font-bold border-l-2 border-secondary bg-[#ECF9FF]" : "text-black"}`}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                    </svg>
                     <p>Rekap Jawaban</p>
                 </Link>
             </div>
