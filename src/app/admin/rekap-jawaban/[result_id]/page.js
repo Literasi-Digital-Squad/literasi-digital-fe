@@ -1,10 +1,10 @@
 'use client'
 import Footer from "@/components/admin/Footer";
 import Navbar from "@/components/admin/Navbar";
-import ListHasil from "@/components/admin/rekap-jawaban/ListHasil";
 import Sidebar from "@/components/admin/Sidebar";
+import DetailJawaban from "@/components/admin/rekap-jawaban/DetailJawaban";
 import { usePathname } from "next/navigation";
-export default function RekapJawaban() {
+export default function Jawaban() {
     const pathName = usePathname();
     const parts = pathName.split("/");
     const path = parts[parts.length - 1];
@@ -13,7 +13,7 @@ export default function RekapJawaban() {
             <Sidebar isActive={path} />
             <div className="w-[85%] h-full">
                 <Navbar />
-                <ListHasil />
+                <DetailJawaban />
                 <Footer />
             </div>
         </div>
