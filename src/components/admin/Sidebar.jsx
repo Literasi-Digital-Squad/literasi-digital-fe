@@ -1,6 +1,20 @@
 'use client';
+
 import Link from "next/link";
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import Loading from "../Loading";
+
 export default function Sidebar({ isActive }) {
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+
+    const handleLogout = () => {
+        setLoading(true);
+        Cookies.remove('token');
+        router.push('/login');
+    };
     return (
         <div className="w-[15%] h-full flex flex-col border-r border-[#D1D1D1]">
             <div className="flex items-center justify-center h-[10%] space-x-2">
@@ -33,11 +47,24 @@ export default function Sidebar({ isActive }) {
                     <p>Rekap Jawaban</p>
                 </Link>
             </div>
-            <button type="button" className=" rounded-xl p-3 m-5 flex items-center justify-center space-x-2 bg-[#F6F6F6] mt-auto">
-                <p>Logout</p>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
-                </svg>
+            <button
+                type="button"
+                onClick={handleLogout}
+                disabled={loading}
+                className="cursor-pointer rounded-xl p-3 m-5 flex items-center justify-center space-x-2 bg-[#F6F6F6] mt-auto"
+            >
+                {loading ? (
+                    <Loading />
+                ) : (
+                    <>
+                        <p>Logout</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                             viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round"
+                                  d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                        </svg>
+                    </>
+                )}
             </button>
         </div>
     )
