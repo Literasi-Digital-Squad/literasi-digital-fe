@@ -18,11 +18,11 @@ export default function ListPertanyaan({ level, setIdDelete, setIsDelete }) {
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-3 text-[#9CA3AF]">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                 </svg>
-                <p className=" text-[#9CA3AF]">Level Literasi</p>
+                <p className=" text-[#9CA3AF]">List Level</p>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-3 text-[#9CA3AF]">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                 </svg>
-                <p>Level Pertanyaan</p>
+                <p>List Pertanyaan</p>
             </div>
             <div className="flex w-full mt-2">
                 <div className="border-[#E3E5E8] border rounded-lg px-3 py-2 flex items-center mr-3">

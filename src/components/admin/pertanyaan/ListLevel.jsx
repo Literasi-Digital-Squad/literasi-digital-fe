@@ -8,7 +8,7 @@ export default function ListLevel() {
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-3 text-[#9CA3AF]">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                 </svg>
-                <p>Level Literasi</p>
+                <p>List Level</p>
             </div>
             <div className="overflow-hidden rounded-lg shadow-lg mx-5 mt-7">
                 <table className="w-full border-collapse bg-white text-left text-sm text-gray-600">
