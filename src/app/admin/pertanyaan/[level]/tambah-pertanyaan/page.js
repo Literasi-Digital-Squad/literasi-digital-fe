@@ -7,7 +7,7 @@ import FormTambah from '@/components/admin/pertanyaan/FormTambah';
 export default function TambahPertanyaan() {
     const pathName = usePathname();
     const parts = pathName.split("/");
-    const path = parts[parts.length - 2];
+    const path = parts[parts.length - 3];
     return (
         <div className="w-screen h-screen font-poppins flex relative">
             <Sidebar isActive={path} />
