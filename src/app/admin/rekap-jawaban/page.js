@@ -1,7 +1,7 @@
 'use client'
 import Footer from "@/components/admin/Footer";
-import ListLevel from "@/components/admin/pertanyaan/ListLevel";
 import Navbar from "@/components/admin/Navbar";
+import ListHasil from "@/components/admin/rekap-jawaban/ListHasil";
 import Sidebar from "@/components/admin/Sidebar";
 import { usePathname } from "next/navigation";
 export default function RekapJawaban() {
@@ -13,7 +13,7 @@ export default function RekapJawaban() {
             <Sidebar isActive={path} />
             <div className="w-[85%] h-full">
                 <Navbar />
-                <ListLevel />
+                <ListHasil />
                 <Footer />
             </div>
         </div>

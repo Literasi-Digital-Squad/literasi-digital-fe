@@ -2,9 +2,9 @@
 import Footer from "@/components/admin/Footer";
 import Navbar from "@/components/admin/Navbar";
 import Sidebar from "@/components/admin/Sidebar";
+import DetailJawaban from "@/components/admin/rekap-jawaban/DetailJawaban";
 import { usePathname } from "next/navigation";
-import Statitik from "@/components/admin/dashboard/Statistik";
-export default function Dashboard() {
+export default function Jawaban() {
     const pathName = usePathname();
     const parts = pathName.split("/");
     const path = parts[parts.length - 1];
@@ -13,7 +13,7 @@ export default function Dashboard() {
             <Sidebar isActive={path} />
             <div className="w-[85%] h-full">
                 <Navbar />
-                <Statitik />
+                <DetailJawaban />
                 <Footer />
             </div>
         </div>
