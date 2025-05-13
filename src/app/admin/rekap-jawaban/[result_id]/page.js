@@ -7,13 +7,14 @@ import { usePathname } from "next/navigation";
 export default function Jawaban() {
     const pathName = usePathname();
     const parts = pathName.split("/");
-    const path = parts[parts.length - 1];
+    const path = parts[parts.length - 2];
+    const idResult = parts[parts.length - 1];
     return (
         <div className="w-screen h-screen font-poppins flex">
             <Sidebar isActive={path} />
             <div className="w-[85%] h-full">
                 <Navbar />
-                <DetailJawaban />
+                <DetailJawaban idResult={idResult}/>
                 <Footer />
             </div>
         </div>
