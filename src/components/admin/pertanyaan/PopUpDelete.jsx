@@ -1,4 +1,14 @@
-export default function PopUpDelete({ isDelete, setIsDelete }) {
+import axiosInstance from "@/utils/axiosInstance";
+export default function PopUpDelete({ isDelete, setIsDelete, data }) {
+    const handleDelete = async () => {
+        try {
+            const response = await axiosInstance.delete(`/admin/questions/${data?.id}`);
+            console.log("Question deleted:", response.data);
+            setIsDelete(false);
+        } catch (error) {
+            console.error("Error:", error.response?.data || error.message);
+        }
+    };
     return (
         <>
             {isDelete == true ? (
@@ -18,7 +28,7 @@ export default function PopUpDelete({ isDelete, setIsDelete }) {
                         </div>
                         <div className="flex mt-5 gap-3">
                             <button type="button" className="rounded-sm p-2 border border-secondary text-secondary cursor-pointer w-full" onClick={() => setIsDelete(false)}>Kembali</button>
-                            <button type="button" className="rounded-sm p-2 bg-secondary text-white cursor-pointer w-full">Ya, Hapus</button>
+                            <button type="button" className="rounded-sm p-2 bg-secondary text-white cursor-pointer w-full" onClick={() => handleDelete()}>Ya, Hapus</button>
                         </div>
                     </div>
                 </div>

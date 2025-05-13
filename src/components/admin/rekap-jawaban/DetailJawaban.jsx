@@ -1,6 +1,22 @@
 import { useRouter } from "next/navigation";
-export default function DetailJawaban() {
+import { useEffect } from "react";
+
+export default function DetailJawaban({ idResult, data }) {
     const router = useRouter()
+    const fetchData = async () => {
+        try {
+            const response = await axiosInstance.get(`/admin/results/${idResult}/question_detail`);
+            setData(response.data.data);
+            setLoading(false);
+        } catch (err) {
+            console.error(err);
+            setError("Terjadi kesalahan saat mengambil data.");
+            setLoading(false);
+        }
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
     return (
         <div className="px-5 py-7 overflow-y-scroll h-[80%] space-y-5">
             <div className="flex items-center gap-5">

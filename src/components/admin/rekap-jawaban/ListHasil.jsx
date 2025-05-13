@@ -1,13 +1,26 @@
 'use client'
 import { useState } from "react"
 import Link from "next/link"
+import { useEffect } from "react";
+import axiosInstance from "@/utils/axiosInstance";
 export default function ListHasil() {
-    const [listHasil, setListHasil] = useState([
-        { nama_user: "Hanif", email: "hanif123@gmail.com", nomor_telepon: "08122222222", waktu_kuis: "Kamis, 27 Maret 2025 08.00", result_level: "Level 1" },
-        { nama_user: "Hanif", email: "hanif123@gmail.com", nomor_telepon: "08122222222", waktu_kuis: "Kamis, 27 Maret 2025 08.00", result_level: "Level 1" },
-        { nama_user: "Hanif", email: "hanif123@gmail.com", nomor_telepon: "08122222222", waktu_kuis: "Kamis, 27 Maret 2025 08.00", result_level: "Level 1" },
-        { nama_user: "Hanif", email: "hanif123@gmail.com", nomor_telepon: "08122222222", waktu_kuis: "Kamis, 27 Maret 2025 08.00", result_level: "Level 1" }
-    ])
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+    const fetchData = async () => {
+        try {
+            const response = await axiosInstance.get("/admin/results");
+            setData(response.data.data);
+            setLoading(false);
+        } catch (err) {
+            console.error(err);
+            setError("Terjadi kesalahan saat mengambil data.");
+            setLoading(false);
+        }
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
     return (
         <div className="px-5 py-7 overflow-y-scroll h-[80%]">
             <p className="text-2xl font-bold">Rekap Jawaban</p>
@@ -32,46 +45,54 @@ export default function ListHasil() {
                     <p>Filter</p>
                 </button>
             </div>
-            {listHasil.length == 0 ? (
-                <div className=" mt-12 flex-col flex items-center text-sm">
-                    <img src="/assets/admin/bg-no-question.png" alt="" className="h-auto w-auto" />
-                    <p className="font-bold mt-5">Belum Ada Hasil Jawaban</p>
-                    <p className="text-[#546881]">Silahkan menunggu hasil jawaban dari user</p>
-                </div>
+            {loading ? (
+                <p>Loading...</p>
+            ) : error ? (
+                <p>{error}</p>
             ) : (
-                <div className="overflow-hidden rounded-lg shadow-lg mx-5 mt-7">
-                    <table className="w-full border-collapse bg-white text-left text-sm text-gray-600">
-                        <thead className="bg-[#0A2D61] text-white">
-                            <tr>
-                                <th className="px-4 py-5">Nama User</th>
-                                <th className="px-4 py-5">Email</th>
-                                <th className="px-4 py-5">Nomor Telepon</th>
-                                <th className="px-4 py-5">Waktu Kuis</th>
-                                <th className="px-4 py-5">Result Level</th>
-                                <th className="px-4 py-5 text-center">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {listHasil.map((hasil, index) => (
-                                <tr key={index} className="hover:bg-gray-100 odd:bg-gray-100 even:bg-white items-center">
-                                    <td className="px-4 py-3">{hasil.nama_user}</td>
-                                    <td className="px-4 py-3">{hasil.email}</td>
-                                    <td className="px-4 py-3">{hasil.nomor_telepon}</td>
-                                    <td className="px-4 py-3">{hasil.waktu_kuis}</td>
-                                    <td className="px-4 py-3">{hasil.result_level}</td>
-                                    <td className="px-4 py-3">
-                                        <Link href={`/admin/rekap-jawaban/${index}`} className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg w-fit cursor-pointer">
-                                            <p>Detail</p>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                            </svg>
-                                        </Link>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                <>
+                    {data.length == 0 ? (
+                        <div className=" mt-12 flex-col flex items-center text-sm">
+                            <img src="/assets/admin/bg-no-question.png" alt="" className="h-auto w-auto" />
+                            <p className="font-bold mt-5">Belum Ada Hasil Jawaban</p>
+                            <p className="text-[#546881]">Silahkan menunggu hasil jawaban dari user</p>
+                        </div>
+                    ) : (
+                        <div className="overflow-hidden rounded-lg shadow-lg mx-5 mt-7">
+                            <table className="w-full border-collapse bg-white text-left text-sm text-gray-600">
+                                <thead className="bg-[#0A2D61] text-white">
+                                    <tr>
+                                        <th className="px-4 py-5">Nama User</th>
+                                        <th className="px-4 py-5">Email</th>
+                                        <th className="px-4 py-5">Nomor Telepon</th>
+                                        <th className="px-4 py-5">Waktu Kuis</th>
+                                        <th className="px-4 py-5 text-center">Result Level</th>
+                                        <th className="px-4 py-5 text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data.map((hasil) => (
+                                        <tr key={hasil.id} className="hover:bg-gray-100 odd:bg-gray-100 even:bg-white items-center">
+                                            <td className="px-4 py-3">{hasil.participant.name}</td>
+                                            <td className="px-4 py-3">{hasil.participant.email}</td>
+                                            <td className="px-4 py-3">{hasil.age}</td>
+                                            <td className="px-4 py-3">{hasil.created_at}</td>
+                                            <td className="px-4 py-3 text-center">{hasil.level_result}</td>
+                                            <td className="px-4 py-3">
+                                                <Link href={`/admin/rekap-jawaban/${hasil.id}`} className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg w-fit cursor-pointer">
+                                                    <p>Detail</p>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                                    </svg>
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </>
             )}
         </div>
     )

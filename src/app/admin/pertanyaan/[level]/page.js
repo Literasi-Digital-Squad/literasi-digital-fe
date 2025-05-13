@@ -11,17 +11,17 @@ export default function Level() {
     const parts = pathName.split("/");
     const level = parts[parts.length - 1];
     const path = parts[parts.length - 2];
-    const [idDelete, setIdDelete] = useState();
+    const [dataDelete, setDataDelete] = useState();
     const [isDelete, setIsDelete] = useState(false);
     return (
         <div className="w-screen h-screen font-poppins flex relative">
             <Sidebar isActive={path} />
             <div className="w-[85%] h-full">
                 <Navbar />
-                <ListPertanyaan level={level} setIdDelete={setIdDelete} setIsDelete={setIsDelete} />
+                <ListPertanyaan level={level} setDataDelete={setDataDelete} setIsDelete={setIsDelete} />
                 <Footer />
             </div>
-            <PopUpDelete isDelete={isDelete} setIsDelete={setIsDelete} />
+            <PopUpDelete isDelete={isDelete} setIsDelete={setIsDelete} data={dataDelete}/>
         </div>
     );
 }
