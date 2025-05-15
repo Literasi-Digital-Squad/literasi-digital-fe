@@ -1,10 +1,22 @@
 "use client"
-import Question from "@/components/user/Question";
-import { useParams } from "next/navigation";
+
+import { useEffect } from "react"
+import Question from "@/components/user/Question"
+import { useQuizStore } from "@/hook/quizStore"
+import { useRouter } from "next/navigation"
+
+export const maxQuestion = 20
 
 export default function Quiz() {
-  const params = useParams()
-  const nomor_soal = parseInt(params?.nomor_soal)
+  const { summary } = useQuizStore()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (summary.length === maxQuestion) {
+      router.push("/quiz/biodata")
+    }
+  }, [summary, router])
+
   return (
     <div className="w-screen h-screen font-poppins bg-white text-black">
       <div className="flex justify-between items-center border-b border-[#DDE1E6] bg-white px-10 h-1/12">
@@ -28,16 +40,18 @@ export default function Quiz() {
         <div>
           <p className="text-sm">Pertanyaan</p>
           <p className="text-xl mt-2">
-            <span className="font-bold text-secondary">{nomor_soal}</span>/20
+            <span className="font-bold text-secondary">{summary.length + 1}</span>/20
           </p>
         </div>
         <div className="w-full h-3 rounded-full overflow-hidden bg-[#ECF9FF]">
           <div
             className="bg-secondary h-full transition-all duration-300"
-            style={{ width: `${nomor_soal * 5}%` }}
+            style={{ width: `${(summary.length+1) * 5}%` }}
           />
         </div>
-        <Question nomor_soal={nomor_soal}/>
+        <Question 
+          nomor_soal={summary.length + 1}
+          />
       </div>
     </div>
   );

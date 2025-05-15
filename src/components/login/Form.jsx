@@ -21,7 +21,7 @@ export default function LoginForm() {
   const [errors, setErrors] = useState({});
   const [formError, setFormError] = useState("");
 
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     setLoading(true)

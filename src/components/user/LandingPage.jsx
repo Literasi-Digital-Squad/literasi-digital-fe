@@ -1,6 +1,15 @@
+"use client"
+
+import { useState } from "react";
 import Link from "next/link";
+import Loading from "../Loading";
 
 export default function Landing(params) {
+    const [loading, setLoading] = useState(false);
+
+    const handleClick = () => {
+        setLoading(true);
+    };
     return (
         <div className="bg-[#0056D2] text-white font-poppins h-screen overflow-scroll">
             <div className="flex justify-between items-center text-white h-1/12 px-10">
@@ -15,11 +24,17 @@ export default function Landing(params) {
                     <p className="font-bold">Yuk, cari tahu seberapa cakap kamu di dalamnya 🌍</p>
                     <p className="text-base">Jelajahi dunia digital dengan lebih cerdas! Ikuti kuis ini dan temukan level literasi digitalmu</p>
                 </div>
-                <Link href={"/quiz/1"} className="flex items-center justify-center gap-2 p-2 bg-primary text-white rounded-md my-5 cursor-pointer">
-                    <p className="text-lg font-bold">Mulai Tes Sekarang</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="size-4">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                    </svg>
+                <Link href={"/quiz"} onClick={handleClick} className="flex items-center justify-center gap-2 p-2 bg-primary text-white rounded-md my-5 cursor-pointer">
+                    {loading ? 
+                        <Loading/>
+                        :
+                        <>
+                            <p className="text-lg font-bold">Mulai Tes Sekarang</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="size-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                            </svg>
+                        </>
+                    }
                 </Link>
                 <div className="flex justify-center">
                     <img src="/assets/user/IlustasiBumi.png" alt="" />

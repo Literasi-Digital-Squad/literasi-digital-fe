@@ -2,8 +2,12 @@
 import PopupShare from "@/components/user/PopupShare";
 import QuizResult from "@/components/user/QuizResult";
 import { useState } from "react";
+import { useParams } from "next/navigation";
+
 export default function Result() {
   const [isOpen, setIsOpen] = useState(false);
+  const params = useParams();
+  const resultId = params.resultId;
   return (
     <div className="w-screen h-screen font-poppins bg-white text-black relative">
       <div className="flex justify-between items-center border-b border-[#DDE1E6] bg-white px-10 h-1/12">
@@ -23,7 +27,7 @@ export default function Result() {
           />
         </svg>
       </div>
-      <QuizResult setIsOpen={setIsOpen} />
+      <QuizResult setIsOpen={setIsOpen} resultId={resultId} />
       <div
         className={`${
           isOpen ? "" : "hidden"
