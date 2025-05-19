@@ -3,16 +3,15 @@ import { useState } from "react";
 import axiosInstance from "@/utils/axiosInstance";
 import Link from "next/link"
 import { useEffect } from "react";
+import Loading from "@/components/Loading";
 export default function ListLevel() {
     const [levels, setLevels] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const [error, setError] = useState('');
     useEffect(() => {
         const fetchLevelsWithCounts = async () => {
             try {
-                // Ambil semua level dari endpoint
                 const { data: levelData } = await axiosInstance.get('/admin/levels');
-                // Untuk setiap level, ambil jumlah soal dengan param level
                 const levelsWithCounts = await Promise.all(
                     levelData.data.map(async (level) => {
                         const res = await axiosInstance.get(`/admin/questions?level=${level.id}`);
@@ -27,14 +26,13 @@ export default function ListLevel() {
                 setLevels(levelsWithCounts);
                 setLoading(false);
             } catch (error) {
-                console.error('Gagal mengambil data level atau soal', error);
+                setError("Terjadi kesalahan saat mengambil data.");
                 setLoading(false);
             }
         };
 
         fetchLevelsWithCounts();
     }, []);
-    console.log(levels)
     return (
         <div className="px-5 py-7 overflow-y-scroll h-[80%]">
             <p className="text-2xl font-bold">Level Literasi</p>
@@ -45,35 +43,44 @@ export default function ListLevel() {
                 </svg>
                 <p>List Level</p>
             </div>
-            <div className="overflow-hidden rounded-lg shadow-lg mx-5 mt-7">
-                <table className="w-full border-collapse bg-white text-left text-sm text-gray-600">
-                    <thead className="bg-[#0A2D61] text-white">
-                        <tr>
-                            <th className="px-4 py-5">Nama Level</th>
-                            <th className="px-4 py-5">Deskripsi Level</th>
-                            <th className="px-4 py-5 text-center">Jumlah Pertanyaan</th>
-                            <th className="px-4 py-5 text-center">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {levels.map((level, index) => (
-                            <tr key={index} className="hover:bg-gray-100 odd:bg-gray-100 even:bg-white">
-                                <td className="px-4 py-3">Level {level.level}</td>
-                                <td className="px-4 py-3">{level.description}</td>
-                                <td className="px-4 py-5 text-center">{level.questionCount}</td>
-                                <td className="px-4 py-3 flex justify-center">
-                                    <Link href={`/admin/pertanyaan/${level.level}`} className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg w-fit">
-                                        <p>Detail</p>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                        </svg>
-                                    </Link>
-                                </td>
+            {loading ? (
+                <div className="flex justify-center items-center h-[80%]">
+                    <Loading />
+                </div>
+            ) : error ? (
+                <div className="flex justify-center items-center h-[80%] text-red-500">
+                    <p>{error}</p>
+                </div>
+            ) : (<div className="overflow-hidden rounded-lg shadow-lg mx-5 mt-7">
+                    <table className="w-full border-collapse bg-white text-left text-sm text-gray-600">
+                        <thead className="bg-[#0A2D61] text-white">
+                            <tr>
+                                <th className="px-4 py-5">Nama Level</th>
+                                <th className="px-4 py-5">Deskripsi Level</th>
+                                <th className="px-4 py-5 text-center">Jumlah Pertanyaan</th>
+                                <th className="px-4 py-5 text-center">Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            {levels.map((level, index) => (
+                                <tr key={index} className="hover:bg-gray-100 odd:bg-gray-100 even:bg-white">
+                                    <td className="px-4 py-3">Level {level.level}</td>
+                                    <td className="px-4 py-3">{level.description}</td>
+                                    <td className="px-4 py-5 text-center">{level.questionCount}</td>
+                                    <td className="px-4 py-3 flex justify-center">
+                                        <Link href={`/admin/pertanyaan/${level.level}`} className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg w-fit">
+                                            <p>Detail</p>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                            </svg>
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
     )
 }

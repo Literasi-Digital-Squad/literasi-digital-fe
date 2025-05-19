@@ -5,6 +5,7 @@ import axiosInstance from "@/utils/axiosInstance";
 export default function EditLevel({ levelData }) {
     const router = useRouter()
     const [desc, setDesc] = useState(levelData?.description)
+    const [error, setError] = useState("")
     const handleEdit = async (e) => {
         e.preventDefault();
         try {
@@ -14,7 +15,7 @@ export default function EditLevel({ levelData }) {
             console.log("Desc edited:", response.data);
             router.back()
         } catch (error) {
-            console.error("Error:", error.response?.data || error.message);
+            setError("Terjadi kesalahan saat mengedit level.");
         }
     };
     const handleChange = (e) => {
@@ -42,6 +43,7 @@ export default function EditLevel({ levelData }) {
                     </div>
                 </div>
                 <div className="flex gap-3 justify-end items-center">
+                    <p className="text-red-500">{error}</p>
                     <button type="button" onClick={() => router.back()} className="cursor-pointer flex items-center border-2 border-[#0056D2] w-min space-x-2 text-secondary px-5 py-3 rounded-lg font-bold">
                         <p>Batal</p>
                     </button>

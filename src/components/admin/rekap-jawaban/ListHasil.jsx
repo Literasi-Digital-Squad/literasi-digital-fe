@@ -3,6 +3,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { useEffect } from "react";
 import axiosInstance from "@/utils/axiosInstance";
+import Loading from "@/components/Loading";
 export default function ListHasil() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -18,6 +19,7 @@ export default function ListHasil() {
             setLoading(false);
         }
     };
+    console.log(data)
     useEffect(() => {
         fetchData();
     }, []);
@@ -46,9 +48,13 @@ export default function ListHasil() {
                 </button>
             </div>
             {loading ? (
-                <p>Loading...</p>
+                <div className="flex justify-center items-center h-4/5">
+                    <Loading />
+                </div>
             ) : error ? (
-                <p>{error}</p>
+                <div className="flex justify-center items-center h-full">
+                    <p className="text-red-500">{error}</p>
+                </div>
             ) : (
                 <>
                     {data.length == 0 ? (
@@ -63,8 +69,8 @@ export default function ListHasil() {
                                 <thead className="bg-[#0A2D61] text-white">
                                     <tr>
                                         <th className="px-4 py-5">Nama User</th>
+                                        <th className="px-4 py-5 text-center">Umur</th>
                                         <th className="px-4 py-5">Email</th>
-                                        <th className="px-4 py-5">Nomor Telepon</th>
                                         <th className="px-4 py-5">Waktu Kuis</th>
                                         <th className="px-4 py-5 text-center">Result Level</th>
                                         <th className="px-4 py-5 text-center">Actions</th>
@@ -74,12 +80,12 @@ export default function ListHasil() {
                                     {data.map((hasil) => (
                                         <tr key={hasil.id} className="hover:bg-gray-100 odd:bg-gray-100 even:bg-white items-center">
                                             <td className="px-4 py-3">{hasil.participant.name}</td>
+                                            <td className="px-4 py-3 text-center">{hasil.participant.age}</td>
                                             <td className="px-4 py-3">{hasil.participant.email}</td>
-                                            <td className="px-4 py-3">{hasil.age}</td>
                                             <td className="px-4 py-3">{hasil.created_at}</td>
                                             <td className="px-4 py-3 text-center">{hasil.level_result}</td>
                                             <td className="px-4 py-3">
-                                                <Link href={`/admin/rekap-jawaban/${hasil.id}`} className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg w-fit cursor-pointer">
+                                                <Link href={`/admin/rekap-jawaban/${hasil.id}?participant_id=${hasil.participant.id}`} className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg w-fit cursor-pointer">
                                                     <p>Detail</p>
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />

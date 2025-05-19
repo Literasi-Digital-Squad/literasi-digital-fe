@@ -6,9 +6,9 @@ export const useQuizStore = create((set) => ({
 
   summary: [],
   addSummary: (item) =>
-  set((state) => ({
-    summary: [...state.summary, item],
-  })),
+    set((state) => ({
+      summary: [...state.summary, item],
+    })),
 
   correct_streak: 0,
   setCorrectStreak: (val) => set({ correct_streak: val }),

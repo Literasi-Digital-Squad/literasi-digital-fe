@@ -7,12 +7,14 @@ import EditLevel from "@/components/admin/level/EditLevel";
 import { useEffect } from "react";
 import { useState } from "react";
 import axiosInstance from "@/utils/axiosInstance";
+import Loading from "@/components/Loading";
 export default function Level() {
     const pathName = usePathname();
     const parts = pathName.split("/");
     const level = parts[parts.length - 1];
     const path = parts[parts.length - 2];
     const [data, setData] = useState({ level: "", description: "" })
+    const [mounted, setMounted] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const fetchData = async () => {
@@ -27,8 +29,12 @@ export default function Level() {
         }
     };
     useEffect(() => {
+        setMounted(true);
         fetchData();
-    }, [data]);
+    }, []);
+    if (!mounted) {
+        return <Loading/>;
+    }
     return (
         <div className="w-screen h-screen font-poppins flex relative">
             <Sidebar isActive={path} />

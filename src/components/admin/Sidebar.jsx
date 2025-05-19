@@ -17,10 +17,9 @@ export default function Sidebar({ isActive }) {
         router.push('/login');
     };
     return (
-        <div className="w-[15%] h-full flex flex-col border-r border-[#D1D1D1]">
-            <div className="flex items-center justify-center h-[10%] space-x-2">
-                <div className="h-10 w-10 bg-black rounded-2xl"></div>
-                <p className="text-secondary font-bold text-xl">Cakap Digital</p>
+        <div className="w-[15%] h-full flex flex-col border-r border-[#f6e0e0]">
+            <div className="flex items-center h-[10%] space-x-2 px-5">
+                <img src="/assets/user/LogoWarna.png" alt="" className="h-10"/>
             </div>
             <div className="pt-5">
                 <Link href="/admin/dashboard" className={`flex space-x-5 py-3 px-5 items-center text-lg ${isActive === "dashboard" ? "text-secondary font-bold border-l-4 border-secondary bg-[#ECF9FF]" : "text-black"}`}>

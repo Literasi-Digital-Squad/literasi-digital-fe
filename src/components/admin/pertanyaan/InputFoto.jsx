@@ -2,16 +2,16 @@
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
-export default function InputFoto() {
+export default function InputFoto({setImageInput, imageInput}) {
     const [image, setImage] = useState(null);
 
     const handleFileAccepted = (files) => {
         const file = files[0];
         setImage(URL.createObjectURL(file));
+        setImageInput(file);
     };
 
     const onDrop = useCallback((acceptedFiles) => {
-        console.log(acceptedFiles);
         if (handleFileAccepted) {
             handleFileAccepted(acceptedFiles);
         }
@@ -24,7 +24,6 @@ export default function InputFoto() {
         },
         maxFiles: 1,
     });
-
     return (
         <>
             <div
@@ -34,6 +33,8 @@ export default function InputFoto() {
                 <input {...getInputProps()} />
                 {image ? (
                     <img src={image} alt="" />
+                ) : imageInput ? (
+                    <img src={imageInput} alt="" />
                 ) : (
                     <>
                         <div className='p-3 bg-[#ECF9FF] rounded-lg w-min'>
@@ -46,7 +47,7 @@ export default function InputFoto() {
                             <p className='text-sm'>Drop file di sini...</p>
                         ) : (
                             <div className='text-sm'>
-                                <p className=' text-gray-600'><span className=' text-black'>Click to upload</span> or drag and drop
+                                <p className='text-gray-600 break-all'><span className=' text-black'>Click to upload</span> or drag and drop
                                     Supports:PNG, JPG</p>
                                 <p className=' text-[#89868D]'>(max, 800x400px)</p>
                             </div>

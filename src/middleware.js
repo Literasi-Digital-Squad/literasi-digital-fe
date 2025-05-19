@@ -7,10 +7,10 @@ export function middleware(request) {
   const isProtectedRoute = pathname.startsWith('/admin');
   const isAuthRoute = pathname === '/login';
 
-  // if (isProtectedRoute && !token) {
-  //   const loginUrl = new URL('/login', request.url);
-  //   return NextResponse.redirect(loginUrl);
-  // }
+  if (isProtectedRoute && !token) {
+    const loginUrl = new URL('/login', request.url);
+    return NextResponse.redirect(loginUrl);
+  }
 
   if (isAuthRoute && token) {
     const dashboardUrl = new URL('/admin/level', request.url);

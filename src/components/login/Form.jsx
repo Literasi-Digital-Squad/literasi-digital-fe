@@ -139,7 +139,9 @@ export default function LoginForm() {
           <img src="/assets/login/graphic.png" alt="" className="h-full" />
         </div>
       </div>
-      <div className="px-20 py-5 text-3xl font-semibold text-[#4285F4] ">LOGO</div>
+      <div className="px-20 py-5 text-3xl font-semibold ">
+        <img src="/assets/user/LogoWarna.png" alt="" className="h-10"/>
+      </div>
       <img src="/assets/login/background.png" alt="" className="h-full" />
     </div>
   );

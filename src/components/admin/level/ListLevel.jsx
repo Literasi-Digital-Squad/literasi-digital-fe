@@ -2,6 +2,7 @@ import Link from "next/link"
 import { useState } from "react"
 import axiosInstance from "@/utils/axiosInstance";
 import { useEffect } from "react";
+import Loading from "@/components/Loading";
 export default function ListLevel() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -31,9 +32,11 @@ export default function ListLevel() {
                 <p>Level</p>
             </div>
             {loading ? (
-                <p>Loading...</p>
+                <div className="flex justify-center items-center h-[80%]">
+                    <Loading />
+                </div>
             ) : error ? (
-                <p>{error}</p>
+                <p className="text-red-500">{error}</p>
             ) : (
                 <div className="overflow-hidden rounded-lg shadow-lg mx-5 mt-7">
                     <table className="w-full border-collapse bg-white text-left text-sm text-gray-600">

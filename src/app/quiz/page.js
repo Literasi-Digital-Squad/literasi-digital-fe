@@ -5,17 +5,17 @@ import Question from "@/components/user/Question"
 import { useQuizStore } from "@/hook/quizStore"
 import { useRouter } from "next/navigation"
 
-export const maxQuestion = 20
+export const maxQuestion = 5
 
 export default function Quiz() {
   const { summary } = useQuizStore()
-  const router = useRouter()
+  // const router = useRouter()
 
-  useEffect(() => {
-    if (summary.length === maxQuestion) {
-      router.push("/quiz/biodata")
-    }
-  }, [summary, router])
+  // useEffect(() => {
+  //   if (summary.length === maxQuestion) {
+  //     router.push("/quiz/biodata")
+  //   }
+  // }, [summary, router])
 
   return (
     <div className="w-screen h-screen font-poppins bg-white text-black">

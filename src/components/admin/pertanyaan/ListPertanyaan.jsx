@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/utils/axiosInstance";
+import Loading from "@/components/Loading";
 export default function ListPertanyaan({ level, setDataDelete, setIsDelete }) {
     const router = useRouter()
     const [data, setData] = useState([]);
@@ -20,13 +21,14 @@ export default function ListPertanyaan({ level, setDataDelete, setIsDelete }) {
             setLoading(false);
         }
     };
-    useEffect(() => {
-        fetchData();
-    }, [data]);
     const handleDelete = (data) => {
         setDataDelete(data)
         setIsDelete(true)
+        fetchData()
     }
+    useEffect(() => {
+        fetchData();
+    }, [data]);
     return (
         <div className="px-5 py-7 overflow-y-scroll h-[80%]">
             <div className="flex items-center gap-5">
@@ -69,9 +71,13 @@ export default function ListPertanyaan({ level, setDataDelete, setIsDelete }) {
                 </Link>
             </div>
             {loading ? (
-                <p>Loading...</p>
+                <div className="flex justify-center items-center h-[80%]">
+                    <Loading />
+                </div>
             ) : error ? (
-                <p>{error}</p>
+                <div className="flex justify-center items-center h-[80%] text-red-500">
+                    <p>{error}</p>
+                </div>
             ) : (
                 <>{
                     data == 0 ? (
@@ -97,7 +103,7 @@ export default function ListPertanyaan({ level, setDataDelete, setIsDelete }) {
                                             <td className="px-4 py-3">{pertanyaan.body}</td>
                                             <td className="px-4 py-3">
                                                 <div className="flex justify-center gap-2">
-                                                    <Link href={`/admin/pertanyaan/${level}/tambah-pertanyaan`} className="flex items-center bg-[#FFB332] text-white p-3 rounded-lg cursor-pointer">
+                                                    <Link href={`/admin/pertanyaan/${level}/edit-pertanyaan/${pertanyaan.id}`} className="flex items-center bg-[#FFB332] text-white p-3 rounded-lg cursor-pointer">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                                         </svg>

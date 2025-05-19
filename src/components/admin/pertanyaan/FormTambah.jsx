@@ -1,15 +1,34 @@
+"use client"
 import { useState } from "react";
 import InputFoto from "./InputFoto";
 import { useRouter } from "next/navigation";
-export default function FormTambah() {
+import axiosInstance from "@/utils/axiosInstance";
+import Loading from "@/components/Loading";
+export default function FormTambah({ level }) {
     const router = useRouter()
-    const [jawaban, setJawaban] = useState([{ jawaban: "", image: "", isTrue: false }])
-
+    const [pertanyaan, setPertanyaan] = useState("")
+    const [imageInput, setImageInput] = useState(null);
+    const [jawaban, setJawaban] = useState([{ jawaban: "", image: null, isTrue: false }])
+    const [error, setError] = useState('')
     const tambahJawaban = () => {
         setJawaban([
             ...jawaban,
             { jawaban: "", image: "", isTrue: false }
         ]);
+    };
+    const handlePertanyaanChange = (e) => {
+        setPertanyaan(e.target.value);
+    };
+    const handleJawabanChange = (index, e) => {
+        const { name, value } = e.target;
+        const newJawaban = [...jawaban];
+        newJawaban[index][name] = value;
+        setJawaban(newJawaban);
+    }
+    const handleJawabanImageChange = (index, file) => {
+        const newJawaban = [...jawaban];
+        newJawaban[index].image = file;
+        setJawaban(newJawaban);
     };
     const toggleIsTrue = (index) => {
         setJawaban(prev =>
@@ -21,6 +40,34 @@ export default function FormTambah() {
         );
     };
 
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
+        try {
+            const formDataQuestion = new FormData();
+            formDataQuestion.append("level_id", level);
+            formDataQuestion.append("body", pertanyaan);
+            if (imageInput) formDataQuestion.append("image", imageInput);
+            const questionRes = await axiosInstance.post("/admin/questions", formDataQuestion, {
+                headers: { "Content-Type": "multipart/form-data" }
+            })
+            const questionId = questionRes.data.data.id;
+            for (let i = 0; i < jawaban.length; i++) {
+                if (jawaban[i].jawaban !== "") {
+                    const formDataAnswer = new FormData();
+                    formDataAnswer.append("body", jawaban[i].jawaban);
+                    formDataAnswer.append("is_correct", jawaban[i].isTrue.toString());
+                    if (jawaban[i].image) formDataAnswer.append("image", jawaban[i].image);
+                    const answerRes = await axiosInstance.post(`/admin/questions/${questionId}/answers`, formDataAnswer, {
+                        headers: { "Content-Type": "multipart/form-data" }
+                    });
+                }
+            }
+            router.back();
+        } catch (error) {
+            setError("Terjadi kesalahan saat menyimpan data.");
+        }
+    }
 
     return (
         <div className="px-5 py-7 overflow-y-scroll h-[80%] space-y-5">
@@ -32,15 +79,22 @@ export default function FormTambah() {
                 </div>
                 <p className="text-2xl font-bold">Level Literasi</p>
             </div>
-            <form action="" className="space-y-5">
+            <form onSubmit={handleSubmit} method="post" className="space-y-5">
                 <div className="grid grid-cols-5 gap-5 p-5 rounded-md shadow-md h-max">
                     <div className="col-span-1 flex flex-col gap-2">
                         <label htmlFor="inputFoto" aria-required className="text-lg font-bold">Gambar</label>
-                        <InputFoto />
+                        <InputFoto setImageInput={setImageInput} imageInput={null} />
                     </div>
                     <div className="col-span-4 flex flex-col gap-2">
                         <label htmlFor="pertanyaan" aria-required className="text-lg font-bold">Pertanyaan</label>
-                        <textarea name="" id="" className="flex-grow w-full border-2 p-2 rounded-md border-[#D1D1D1]" placeholder="Masukkan Pertanyaan.."></textarea>
+                        <textarea
+                            name=""
+                            id=""
+                            className="flex-grow w-full border-2 p-2 rounded-md border-[#D1D1D1]"
+                            placeholder="Masukkan Pertanyaan.."
+                            value={pertanyaan}
+                            onChange={handlePertanyaanChange}
+                        />
                     </div>
                 </div>
                 <div className="p-5 rounded-md shadow-md flex flex-col gap-2">
@@ -48,19 +102,25 @@ export default function FormTambah() {
                     <div className="grid grid-cols-3 gap-5">
                         {jawaban.map((item, index) => (
                             <div key={index} className="flex flex-col items-center col-span-1 gap-3 border-dashed border-2 border-[#D1D1D1] p-5 rounded-lg">
-                                <div className="flex justify-between w-full">
-                                    <div className='p-2 bg-[#ECF9FF] rounded-full w-min'>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-5 text-secondary">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                                        </svg>
-                                    </div>
+                                <div className="flex justify-end w-full">
                                     <div className={`p-2 rounded-full w-min cursor-pointer ${item.isTrue ? 'bg-[#9CD99E]' : 'bg-[#F6F6F6]'}`} onClick={() => toggleIsTrue(index)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-5">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                                         </svg>
                                     </div>
                                 </div>
-                                <textarea name="" id="" rows={3} className="focus:outline-none resize-none w-full text-center" placeholder="Masukkan Jawaban" />
+                                <InputFoto
+                                    setImageInput={(file) => handleJawabanImageChange(index, file)}
+                                    imageInput={jawaban[index].image}
+                                />
+                                <textarea
+                                    name="jawaban"
+                                    rows={3}
+                                    className="focus:outline-none resize-none w-full text-center border-dashed border-2 border-[#D1D1D1] rounded-lg"
+                                    placeholder="Masukkan Jawaban"
+                                    onChange={(e) => handleJawabanChange(index, e)}
+                                    value={item.jawaban}
+                                />
                             </div>
                         ))}
                         <div className="flex flex-col items-center col-span-1 gap-3 border-dashed h-min border-2 border-[#D1D1D1] p-5 rounded-lg cursor-pointer" onClick={() => tambahJawaban()}>
@@ -72,10 +132,11 @@ export default function FormTambah() {
                     </div>
                 </div>
                 <div className="flex gap-3 justify-end items-center">
+                    <p className="text-red-500">{error}</p>
                     <button type="button" onClick={() => router.back()} className="cursor-pointer flex items-center border-2 border-[#0056D2] w-min space-x-2 text-secondary px-5 py-3 rounded-lg font-bold">
                         <p>Batal</p>
                     </button>
-                    <button type="button" onClick={() => router.back()} className="cursor-pointer flex items-center bg-[#0056D2] w-fit space-x-2 text-white px-5 py-3 rounded-lg font-bold">
+                    <button type="submit" className="cursor-pointer flex items-center bg-[#0056D2] w-fit space-x-2 text-white px-5 py-3 rounded-lg font-bold">
                         <p>Simpan Pertanyaan</p>
                     </button>
                 </div>
