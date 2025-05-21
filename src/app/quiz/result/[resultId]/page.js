@@ -1,13 +1,21 @@
 "use client";
+
 import PopupShare from "@/components/user/PopupShare";
 import QuizResult from "@/components/user/QuizResult";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import { useQuizStore } from "@/hook/quizStore";
 
 export default function Result() {
   const [isOpen, setIsOpen] = useState(false);
   const params = useParams();
+  
   const resultId = params.resultId;
+  const { resetQuiz } = useQuizStore()
+
+  useEffect(() => {
+    resetQuiz();
+  }, []);
   return (
     <div className="w-screen h-screen font-poppins bg-white text-black relative">
       <div className="flex justify-between items-center border-b border-[#DDE1E6] bg-white px-10 h-1/12">

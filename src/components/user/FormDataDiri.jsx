@@ -4,15 +4,17 @@ import { useQuizStore } from "@/hook/quizStore";
 import axiosInstance from "@/utils/axiosInstance";
 import { useRouter } from "next/navigation"
 import { useState } from "react";
+import Loading from "../Loading";
+import axios from "axios";
 
 export default function FormDataDiri() {
     const router = useRouter()
+    const [loading, setLoading] = useState(false)
 
     const {
-        summary,
         total_correct,
         theta,
-        resetQuiz
+        summary
     } = useQuizStore()
     
     const [formData, setFormData] = useState({
@@ -40,6 +42,8 @@ export default function FormDataDiri() {
         };
 
         try {
+            setLoading(true)
+
             const res = await axiosInstance.post("/participants", payload)
             const resultParticipant = res.data
             console.log("Data Participant:", resultParticipant.data[0]);
@@ -54,8 +58,15 @@ export default function FormDataDiri() {
             const resultResult = resResult.data;
             console.log("Data Result:", resultResult.data[0])
 
+            const payloadResultQuestion = {
+                result_questions: summary
+            }
+            axiosInstance.post(`/results/${resultResult.data[0].id}/submit`, payloadResultQuestion)
+            console.log("Data Result Question:", payloadResultQuestion)
+
             router.push(`/quiz/result/${resultResult.data[0].id}`)
         } catch (error) {
+            setLoading(false)
             // Todo: error pop up
             console.error("Terjadi kesalahan:", error);
         }
@@ -130,12 +141,16 @@ export default function FormDataDiri() {
                 </div>
                 <button
                     type="submit"
-                    className="w-full p-3 bg-primary text-xl font-semibold flex gap-3 rounded-lg justify-center items-center text-white"
+                    className="w-full p-3 bg-primary text-xl font-semibold flex gap-3 rounded-lg justify-center items-center text-white cursor-pointer"
                 >
-                    <p>Selesai</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                    </svg>
+                {loading ? <Loading/> :
+                    <>
+                        <p>Selesai</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                        </svg>
+                    </>
+                }
                 </button>
             </form>
         </div>

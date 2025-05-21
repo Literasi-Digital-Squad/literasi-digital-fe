@@ -61,41 +61,46 @@ export default function Question({ nomor_soal }) {
     const handleNext = async () => {
         if (!selectedJawaban) {
             return
-        } else {
+        }
+
+        try {
             setLoading(true)
-            try {
-                const payload = {
-                    theta: theta || 3,
-                    question_id: lastQuestionId,
-                    answer_id: selectedJawaban,
-                    correct_streak,
-                    wrong_streak,
-                    total_correct,
-                }
+            const payload = {
+                theta: theta || 3,
+                question_id: lastQuestionId,
+                answer_id: selectedJawaban,
+                correct_streak,
+                wrong_streak,
+                total_correct,
+            }
 
-                const res = await axiosInstance.post("/questions", payload);
-                const { data } = res.data;
+            const res = await axiosInstance.post("/questions", payload);
+            const { data } = res.data;
 
-                setTheta(data.theta)
-                setCorrectStreak(data.correct_streak)
-                setWrongStreak(data.wrong_streak)
-                setTotalCorrect(data.total_correct)
+            setTheta(data.theta)
+            setCorrectStreak(data.correct_streak)
+            setWrongStreak(data.wrong_streak)
+            setTotalCorrect(data.total_correct)
 
-                addSummary({
-                    question_id: lastQuestionId,
-                    answer_id: selectedJawaban,
-                })
+            addSummary({
+                question_id: lastQuestionId,
+                answer_id: selectedJawaban,
+            })
 
+            if (summary.length + 1 < maxQuestion) {
                 setQuestion(data.question)
                 setLastQuestionId(data.question.id)
                 fetchAnswers(data.question.id)
                 setSelectedJawaban(null)
                 setLoading(false)
 
-            } catch (err) {
-                // Todo: error pop up
-                console.error("Error posting answer:", err)
+                return
             }
+            
+            router.push(`/quiz/biodata`)
+        } catch (err) {
+            // Todo: error pop up
+            console.error("Error posting answer:", err)
         }
     }
 
