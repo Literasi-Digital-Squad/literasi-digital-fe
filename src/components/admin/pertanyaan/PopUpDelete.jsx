@@ -1,12 +1,19 @@
+'use client';
+import Loading from "@/components/Loading";
 import axiosInstance from "@/utils/axiosInstance";
+import { useState } from "react";
 export default function PopUpDelete({ isDelete, setIsDelete, data }) {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const handleDelete = async () => {
+        setLoading(true);
         try {
             const response = await axiosInstance.delete(`/admin/questions/${data?.id}`);
-            console.log("Question deleted:", response.data);
             setIsDelete(false);
         } catch (error) {
-            console.error("Error:", error.response?.data || error.message);
+            setError("Error:", error.response?.data || error.message);
+        } finally {
+            setLoading(false);
         }
     };
     return (
@@ -26,9 +33,12 @@ export default function PopUpDelete({ isDelete, setIsDelete, data }) {
                             <p className="font-bold text-xl mt-5">Apakah Anda yakin ingin menghapus pertanyaan ini ?</p>
                             <p className="text-[#909DAD]">Menghapus pertanyaan ini akan mengakibatkan Anda tidak dapat mengaksesnya lagi. Tindakan ini tidak dapat dibatalkan.</p>
                         </div>
+                        <p className="text-red-500">{error}</p>
                         <div className="flex mt-5 gap-3">
                             <button type="button" className="rounded-sm p-2 border border-secondary text-secondary cursor-pointer w-full" onClick={() => setIsDelete(false)}>Kembali</button>
-                            <button type="button" className="rounded-sm p-2 bg-secondary text-white cursor-pointer w-full" onClick={() => handleDelete()}>Ya, Hapus</button>
+                            <button type="button" className="rounded-sm p-2 bg-secondary text-white cursor-pointer w-full flex justify-center" onClick={() => handleDelete()}>
+                                {loading ? (<Loading />) : "Ya, Hapus"}
+                            </button>
                         </div>
                     </div>
                 </div>
