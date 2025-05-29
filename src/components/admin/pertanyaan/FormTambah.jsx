@@ -9,7 +9,6 @@ export default function FormTambah({ level }) {
     const [pertanyaan, setPertanyaan] = useState("")
     const [imageInput, setImageInput] = useState(null);
     const [jawaban, setJawaban] = useState([{ jawaban: "", image: null, isTrue: false }])
-    const [error, setError] = useState('')
     const tambahJawaban = () => {
         setJawaban([
             ...jawaban,
@@ -40,8 +39,10 @@ export default function FormTambah({ level }) {
         );
     };
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const handleSubmit = async (e) => {
-
+        setLoading(true);
         e.preventDefault();
         try {
             const formDataQuestion = new FormData();
@@ -66,6 +67,8 @@ export default function FormTambah({ level }) {
             router.back();
         } catch (error) {
             setError("Terjadi kesalahan saat menyimpan data.");
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -137,7 +140,7 @@ export default function FormTambah({ level }) {
                         <p>Batal</p>
                     </button>
                     <button type="submit" className="cursor-pointer flex items-center bg-[#0056D2] w-fit space-x-2 text-white px-5 py-3 rounded-lg font-bold">
-                        <p>Simpan Pertanyaan</p>
+                        {loading ? <Loading /> : <p>Simpan Pertanyaan</p>}
                     </button>
                 </div>
             </form>
