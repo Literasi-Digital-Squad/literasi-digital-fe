@@ -6,6 +6,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Loading from "../Loading";
+import axiosInstance from "@/utils/axiosInstance";
 
 const schema = z.object({
   email: z.string().min(1, "Email tidak boleh kosong"),
@@ -38,7 +39,7 @@ export default function LoginForm() {
     }
 
     try {
-        const res = await axios.post("http://34.143.170.229:3000/login", {
+        const res = await axiosInstance.post("/login", {
             email,
             password,
         });
