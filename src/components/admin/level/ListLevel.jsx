@@ -36,7 +36,9 @@ export default function ListLevel() {
                     <Loading />
                 </div>
             ) : error ? (
+                <div className="flex justify-center items-center h-[80%]">
                 <p className="text-red-500">{error}</p>
+                </div>
             ) : (
                 <div className="overflow-hidden rounded-lg shadow-lg mx-5 mt-7">
                     <table className="w-full border-collapse bg-white text-left text-sm text-gray-600">

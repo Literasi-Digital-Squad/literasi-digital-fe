@@ -14,12 +14,10 @@ export default function ListHasil() {
             setData(response.data.data);
             setLoading(false);
         } catch (err) {
-            console.error(err);
             setError("Terjadi kesalahan saat mengambil data.");
             setLoading(false);
         }
     };
-    console.log(data)
     useEffect(() => {
         fetchData();
     }, []);
@@ -33,30 +31,30 @@ export default function ListHasil() {
                 </svg>
                 <p>List User</p>
             </div>
-            <div className="flex w-full mt-2">
-                <div className="border-[#E3E5E8] border rounded-lg px-3 py-2 flex items-center mr-3">
-                    <input type="text" className="focus:outline-none text-sm" />
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-5 text-[#9CA3AF]">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                    </svg>
-                </div>
-                <button type="button" className="flex items-center border border-[#E3E5E8] text-[#9CA3AF] space-x-2 px-3 py-2 rounded-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                    </svg>
-                    <p>Filter</p>
-                </button>
-            </div>
             {loading ? (
                 <div className="flex justify-center items-center h-4/5">
                     <Loading />
                 </div>
             ) : error ? (
-                <div className="flex justify-center items-center h-full">
+                <div className="flex justify-center items-center h-4/5">
                     <p className="text-red-500">{error}</p>
                 </div>
             ) : (
                 <>
+                    <div className="flex w-full mt-2">
+                        <div className="border-[#E3E5E8] border rounded-lg px-3 py-2 flex items-center mr-3">
+                            <input type="text" className="focus:outline-none text-sm" />
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-5 text-[#9CA3AF]">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                        </div>
+                        <button type="button" className="flex items-center border border-[#E3E5E8] text-[#9CA3AF] space-x-2 px-3 py-2 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                            </svg>
+                            <p>Filter</p>
+                        </button>
+                    </div>
                     {data.length == 0 ? (
                         <div className=" mt-12 flex-col flex items-center text-sm">
                             <img src="/assets/admin/bg-no-question.png" alt="" className="h-auto w-auto" />

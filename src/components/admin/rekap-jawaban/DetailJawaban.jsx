@@ -38,25 +38,25 @@ export default function DetailJawaban({ resultId, participantId }) {
         fetchDataParticipant();
     }, []);
     return (
-        <>
+        <div className="px-5 py-7 overflow-y-scroll h-[80%] space-y-5">
+            <div className="flex items-center gap-5">
+                <div className="border border-[#E3E5E8] p-1 rounded-md cursor-pointer" onClick={() => router.back()}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                    </svg>
+                </div>
+                <p className="text-2xl font-bold">Detail Jawaban</p>
+            </div>
             {loading || loadingDetail ? (
                 <div className="flex justify-center items-center h-4/5">
                     <Loading />
                 </div>
             ) : error ? (
-                <div className="flex justify-center items-center h-full">
+                <div className="flex justify-center items-center h-[80%]">
                     <p className="text-red-500">{error}</p>
                 </div>
             ) : (
-                <div className="px-5 py-7 overflow-y-scroll h-[80%] space-y-5">
-                    <div className="flex items-center gap-5">
-                        <div className="border border-[#E3E5E8] p-1 rounded-md cursor-pointer" onClick={() => router.back()}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                            </svg>
-                        </div>
-                        <p className="text-2xl font-bold">Detail Jawaban</p>
-                    </div>
+                <>
                     <div className="text-sm px-5">
                         <p className="font-bold mb-5">Data Pengguna</p>
                         <div className="rounded-md flex gap-5 items-center">
@@ -89,7 +89,7 @@ export default function DetailJawaban({ resultId, participantId }) {
                             <p className="p-2 px-3 bg-[#D32F2F] rounded-lg w-fit text-white font-semibold">Soal {index + 1}</p>
                             <div className="grid grid-cols-3 gap-5">
                                 <div className="p-2 border border-[#D1D1D1] h-fit rounded-md">
-                                    <img src={result.image_url} alt={"soal "+(index+1)} className="rounded-md" />
+                                    <img src={result.image_url} alt={"soal " + (index + 1)} className="rounded-md" />
                                 </div>
                             </div>
                             <p className="font-bold p-3 shadow-sm rounded-lg">{result.body}</p>
@@ -109,7 +109,8 @@ export default function DetailJawaban({ resultId, participantId }) {
                             ))}
                         </div>
                     ))}
-                </div>)}
-        </>
+                </>
+            )}
+        </div>
     );
 }

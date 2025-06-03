@@ -10,7 +10,7 @@ export default function TambahPertanyaan() {
     const path = parts[parts.length - 3];
     const level = parts[parts.length - 2];
     return (
-        <div className="w-screen h-screen font-poppins flex relative">
+        <div className="w-screen h-screen overflow-hidden font-poppins flex relative">
             <Sidebar isActive={path} />
             <div className="w-[85%] h-full">
                 <Navbar />

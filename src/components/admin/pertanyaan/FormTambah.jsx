@@ -83,7 +83,7 @@ export default function FormTambah({ level }) {
                 <p className="text-2xl font-bold">Level Literasi</p>
             </div>
             <form onSubmit={handleSubmit} method="post" className="space-y-5">
-                <div className="grid grid-cols-5 gap-5 p-5 rounded-md shadow-md h-max">
+                <div className="grid grid-cols-5 gap-2 rounded-md shadow-md p-5">
                     <div className="col-span-1 flex flex-col gap-2">
                         <label htmlFor="inputFoto" aria-required className="text-lg font-bold">Gambar</label>
                         <InputFoto setImageInput={setImageInput} imageInput={null} />

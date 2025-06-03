@@ -140,13 +140,13 @@ export default function FormEdit({ level, questionId }) {
                 <p className="text-2xl font-bold">Level Literasi</p>
             </div>
             <form onSubmit={handleSubmit} method="post" className="space-y-5">
-                <div className="grid grid-cols-5 gap-5 p-5 rounded-md shadow-md h-max">
+                <div name="editNama" className="grid grid-cols-5 gap-5 p-5 rounded-md shadow-md">
                     {loadingFetch ? (
                         <div className="col-span-5 flex justify-center items-center h-40">
                             <Loading />
                         </div>
                     ) : errorFetch ? (
-                        <div className="flex justify-center items-center h-[80%] text-red-500">
+                        <div className="col-span-5 flex justify-center items-center text-red-500">
                             <p>{errorFetch}</p>
                         </div>
                     ) : (
@@ -158,7 +158,7 @@ export default function FormEdit({ level, questionId }) {
                             <div className="col-span-4 flex flex-col gap-2">
                                 <label htmlFor="pertanyaan" aria-required className="text-lg font-bold">Pertanyaan</label>
                                 <textarea
-                                    className="flex-grow w-full border-2 p-2 rounded-md border-[#D1D1D1]"
+                                    className="flex-grow border-2 p-2 rounded-md border-[#D1D1D1]"
                                     placeholder="Masukkan Pertanyaan.."
                                     value={pertanyaan}
                                     onChange={handlePertanyaanChange}

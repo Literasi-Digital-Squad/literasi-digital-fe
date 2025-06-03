@@ -38,7 +38,7 @@ export default function LoginForm() {
     }
 
     try {
-        const res = await axios.post("http://localhost:3000/api/v1/login", {
+        const res = await axios.post("http://34.143.170.229:3000/login", {
             email,
             password,
         });
@@ -49,7 +49,7 @@ export default function LoginForm() {
             sameSite: "strict",
         });
     
-        router.push("/admin/level");
+        router.push("/admin/dashboard");
     } catch (error) {
         setLoading(false)
         console.error("Login error:", error.response?.data || error.message);

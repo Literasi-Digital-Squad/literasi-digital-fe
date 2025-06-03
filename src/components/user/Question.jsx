@@ -14,6 +14,7 @@ export default function Question({ nomor_soal }) {
     const [selectedJawaban, setSelectedJawaban] = useState(null)
     const [loading, setLoading] = useState(false)
     const [lastQuestionId, setLastQuestionId] = useState(null)
+    const [errorFetch, setErrorFetch] = useState("")
 
     const {
         theta,
@@ -37,8 +38,7 @@ export default function Question({ nomor_soal }) {
                 setLastQuestionId(data.data.id);
                 fetchAnswers(data.data.id);
             } catch (err) {
-                // Todo: error pop up
-                console.error("Error fetching initial question:", err)
+                setErrorFetch("Terdapat kesalahan saat mengambil data.")
             }
         }
 
@@ -50,7 +50,6 @@ export default function Question({ nomor_soal }) {
     const fetchAnswers = async (questionId) => {
         try {
             const res = await axiosInstance.get(`/questions/${questionId}/answers`)
-            console.log(res.data.data)
             setAnswers(res.data.data)
         } catch (err) {
             // Todo: error pop up
@@ -58,6 +57,7 @@ export default function Question({ nomor_soal }) {
         }
     }
 
+    const [errorPush, setErrorPush] = useState("")
     const handleNext = async () => {
         if (!selectedJawaban) {
             return
@@ -93,18 +93,20 @@ export default function Question({ nomor_soal }) {
                 fetchAnswers(data.question.id)
                 setSelectedJawaban(null)
                 setLoading(false)
+                setErrorPush("")
+                setErrorFetch("")
 
                 return
             }
-            
+
             router.push(`/quiz/biodata`)
         } catch (err) {
-            // Todo: error pop up
-            console.error("Error posting answer:", err)
+            setErrorPush("Terdapat kesalahan saat mengambil data.")
         }
     }
 
-    if (!question || loading) return <Loading />
+    if (!question || loading) return <div className="flex justify-center items-center h-11/12"><Loading /></div>
+    else if (errorFetch) return <div className="text-center text-red-500">{errorFetch}</div>
 
     return (
         <>
@@ -135,7 +137,7 @@ export default function Question({ nomor_soal }) {
                         </div>
                     ))}
                 </div>
-
+                <p>{errorPush}</p>
                 <button
                     onClick={handleNext}
                     disabled={!selectedJawaban || loading}

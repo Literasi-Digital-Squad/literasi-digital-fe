@@ -13,34 +13,12 @@ export default function Level() {
     const parts = pathName.split("/");
     const level = parts[parts.length - 1];
     const path = parts[parts.length - 2];
-    const [data, setData] = useState({ level: "", description: "" })
-    const [mounted, setMounted] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
-    const fetchData = async () => {
-        try {
-            const response = await axiosInstance.get(`/admin/levels/${level}`);
-            setData(response.data.data);
-            setLoading(false);
-        } catch (err) {
-            console.error(err);
-            setError("Terjadi kesalahan saat mengambil data.");
-            setLoading(false);
-        }
-    };
-    useEffect(() => {
-        setMounted(true);
-        fetchData();
-    }, []);
-    if (!mounted) {
-        return <Loading/>;
-    }
     return (
         <div className="w-screen h-screen font-poppins flex relative">
             <Sidebar isActive={path} />
             <div className="w-[85%] h-full">
                 <Navbar />
-                <EditLevel levelData={data} />
+                <EditLevel level={level} />
                 <Footer />
             </div>
         </div>
