@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const baseURL = "http://34.143.170.229:3000/api/v1";
+const baseURL = "https://literasi-digital-be-758159032383.asia-southeast1.run.app/api/v1";
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
