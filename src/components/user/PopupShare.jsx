@@ -46,7 +46,7 @@ export default function PopupShare({ setIsOpen, linkShare }) {
                     <WhatsappShareButton
                         url={linkShare}
                         title={'Lihatlah nilai pengetahuan literasi digital saya di CakapDigital!'}
-                        separator=":: "
+                        separator=". "
                     >
                         <WhatsappIcon />
                     </WhatsappShareButton>
@@ -72,9 +72,9 @@ export default function PopupShare({ setIsOpen, linkShare }) {
                     <p>Messenger</p>
                 </div>
             </div>
-            <div className="border border-[#0056D2] rounded-lg flex overflow-hidden">
-                <input type="text" value={linkShare} disabled />
-                <div className="bg-[#0056D2] p-2 font-semibold text-white" onClick={copylink}>Salin</div>
+            <div className="border w-full border-[#0056D2] rounded-lg flex overflow-hidden">
+                <input type="text" className='w-3/4' value={linkShare} disabled />
+                <div className="bg-[#0056D2] p-2 w-1/4 font-semibold text-white" onClick={copylink}>Salin</div>
             </div>
         </div>
     )

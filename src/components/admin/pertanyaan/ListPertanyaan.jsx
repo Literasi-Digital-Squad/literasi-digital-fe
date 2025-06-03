@@ -104,7 +104,9 @@ export default function ListPertanyaan({ level, setDataDelete, setIsDelete }) {
                                     <tbody>
                                         {data.map((pertanyaan) => (
                                             <tr key={pertanyaan.id} className="hover:bg-gray-100 odd:bg-gray-100 even:bg-white items-center">
-                                                <td className="px-4 py-3"><img src={pertanyaan.image_url} alt="" className="w-32" /></td>
+                                                <td className="px-4 py-3">
+                                                    {pertanyaan.image_url ? <img src={pertanyaan.image_url} alt="" className="w-32" /> : "Belum ada gambar"}
+                                                </td>
                                                 <td className="px-4 py-3">{pertanyaan.body}</td>
                                                 <td className="px-4 py-3">
                                                     <div className="flex justify-center gap-2">

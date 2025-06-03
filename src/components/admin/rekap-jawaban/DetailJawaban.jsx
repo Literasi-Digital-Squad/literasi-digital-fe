@@ -13,8 +13,9 @@ export default function DetailJawaban({ resultId, participantId }) {
     const router = useRouter()
     const fetchDataResult = async () => {
         try {
-            const response = await axiosInstance.get(`/admin/results/${resultId}/question_detail`);
+            const response = await axiosInstance.get(`/admin/results/${resultId}/question_detail?limit=20`);
             setResults(response.data.data);
+            console.log(response.data.data);
             setLoading(false);
         } catch (err) {
             console.error(err);
@@ -71,7 +72,7 @@ export default function DetailJawaban({ resultId, participantId }) {
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                     </svg>
-                                    <p>{participant[0].created_at}</p>
+                                    <p>{participant[0]?.created_at?.split("T")[0]} {participant[0]?.created_at?.split("T")[1]?.split(".")[0]}</p>
                                 </div>
                             </div>
                             <div className="flex shadow-sm w-1/2 p-3 h-fit justify-center gap-5 rounded-lg">
@@ -87,28 +88,45 @@ export default function DetailJawaban({ resultId, participantId }) {
                     {results.map((result, index) => (
                         <div className="px-5 space-y-3" key={index}>
                             <p className="p-2 px-3 bg-[#D32F2F] rounded-lg w-fit text-white font-semibold">Soal {index + 1}</p>
-                            <div className="grid grid-cols-3 gap-5">
-                                <div className="p-2 border border-[#D1D1D1] h-fit rounded-md">
-                                    <img src={result.image_url} alt={"soal " + (index + 1)} className="rounded-md" />
+                            {result.image_url ? (
+                                <div className="grid grid-cols-3 gap-5">
+                                    <div className="p-2 border border-[#D1D1D1] h-fit rounded-md">
+                                        <img src={result.image_url} alt={"soal " + (index + 1)} className="rounded-md" />
+                                    </div>
                                 </div>
-                            </div>
+                            ) : ""}
                             <p className="font-bold p-3 shadow-sm rounded-lg">{result.body}</p>
                             {result.answers.map((answer) => (
                                 <div key={answer.id}>
-                                    {answer.image_url ? (
-                                        <div
-                                            className={`text-center p-2 rounded-md` + (answer.answered && answer.is_correct ? " bg-[#43A047] text-white" : answer.answered ? "bg-red-500 text-white" : "text-black")}>
-                                            <img src={answer.image_url} alt={answer.image_url} className="rounded-md h-36" />
-                                            {answer.body}
-                                        </div>) : (
-                                        <div className={`text-center p-2 rounded-md` + (answer.answered && answer.is_correct ? " bg-[#43A047] text-white" : answer.answered ? "bg-red-500 text-white" : "text-black")}>
-                                            {answer.body}
-                                        </div>
-                                    )}
+                                    <div
+                                        className={
+                                            "text-center p-2 rounded-md " +
+                                            (answer.answered
+                                                ? answer.is_correct
+                                                    ? "bg-[#43A047] text-white"  // answered & correct → hijau
+                                                    : "bg-red-500 text-white"    // answered & not correct → merah
+                                                : "bg-white text-black border border-[#D1D1D1]") // belum dijawab → netral
+                                        }
+                                    >
+                                        {answer.image_url ?
+                                            <>
+                                                <img src={answer.image_url} alt={answer.image_url} className="rounded-md h-36" />
+                                                {answer.body}
+                                            </> :
+                                            <>
+                                                {answer.body}
+                                            </>
+                                        }
+                                    </div>
                                 </div>
                             ))}
                         </div>
                     ))}
+                    <div className="px-5 flex justify-end">
+                        <button type="button" onClick={() => router.back()} className="cursor-pointer flex items-center border-2 border-[#0056D2] w-min space-x-2 text-secondary px-5 py-3 rounded-lg font-bold">
+                            <p>Kembali</p>
+                        </button>
+                    </div>
                 </>
             )}
         </div>

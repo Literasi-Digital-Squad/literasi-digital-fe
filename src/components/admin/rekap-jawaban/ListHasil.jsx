@@ -80,7 +80,7 @@ export default function ListHasil() {
                                             <td className="px-4 py-3">{hasil.participant.name}</td>
                                             <td className="px-4 py-3 text-center">{hasil.participant.age}</td>
                                             <td className="px-4 py-3">{hasil.participant.email}</td>
-                                            <td className="px-4 py-3">{hasil.created_at}</td>
+                                            <td className="px-4 py-3">{hasil.created_at?.split("T")[0]} {hasil.created_at?.split("T")[1]?.split(".")[0]}</td>
                                             <td className="px-4 py-3 text-center">{hasil.level_result}</td>
                                             <td className="px-4 py-3">
                                                 <Link href={`/admin/rekap-jawaban/${hasil.id}?participant_id=${hasil.participant.id}`} className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg w-fit cursor-pointer">

@@ -43,9 +43,10 @@ export default function LoginForm() {
             email,
             password,
         });
-    
+
+        const in180Minutes = new Date(new Date().getTime() + 180 * 60 * 1000);
         Cookies.set("token", res.data.token, {
-            expires: 7,
+            expires: in180Minutes,
             secure: true,
             sameSite: "strict",
         });

@@ -20,7 +20,7 @@ export default function ListLevel() {
     };
     useEffect(() => {
         fetchData();
-    }, [data]);
+    }, []);
     return (
         <div className="px-5 py-7 overflow-y-scroll h-[80%]">
             <p className="text-2xl font-bold">Level Literasi</p>
