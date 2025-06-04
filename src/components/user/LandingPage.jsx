@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Loading from "../Loading";
+import Footer from "../admin/Footer";
 
 export default function Landing(params) {
     const [loading, setLoading] = useState(false);
@@ -14,9 +15,6 @@ export default function Landing(params) {
         <div className="bg-[#0056D2] text-white font-poppins h-screen overflow-scroll">
             <div className="flex justify-between items-center text-white h-1/12 px-10">
                 <img src="/assets/user/Logo.png" alt="" />
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                </svg>
             </div>
             <div className="px-10">
                 <div className="text-2xl mt-5">
@@ -40,7 +38,7 @@ export default function Landing(params) {
                     <img src="/assets/user/IlustasiBumi.png" alt="" />
                 </div>
                 <p className="font-semibold mb-5">Ketahui Tingkat Literasi Digitalmu! 🚀</p>
-                <div className="space-y-3 text-black pb-5">
+                <div className="space-y-3 text-black pb-10">
                     <div className="rounded-md p-2 bg-[#F6F6F6] flex items-center gap-3">
                         <div className="p-2 rounded-md bg-white">
                             <img src="/assets/user/IlustasiBuku.png" alt="" />
@@ -61,6 +59,7 @@ export default function Landing(params) {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

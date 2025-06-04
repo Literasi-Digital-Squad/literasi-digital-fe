@@ -18,7 +18,7 @@ export default function Level() {
             <Sidebar isActive={path} />
             <div className="w-[85%] h-full">
                 <Navbar />
-                <ListPertanyaan level={level} setDataDelete={setDataDelete} setIsDelete={setIsDelete} />
+                <ListPertanyaan level={level} isDelete={isDelete} setDataDelete={setDataDelete} setIsDelete={setIsDelete} />
                 <Footer />
             </div>
             <PopUpDelete isDelete={isDelete} setIsDelete={setIsDelete} data={dataDelete}/>

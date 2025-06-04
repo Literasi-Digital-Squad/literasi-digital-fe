@@ -1,6 +1,6 @@
-export default function Footer(params) {
+export default function Footer() {
     return (
-        <div className="flex justify-between space-x-3 px-5 h-[10%] items-center border-t border-[#D1D1D1]">
+        <div className="flex flex-col md:flex-row justify-center md:justify-between bg-primary md:bg-white text-black space-x-3 px-5 h-[10%] items-center border-t md:border-[#D1D1D1] text-sm md:text-base">
             <p className="font-bold">© 2025 Cakap Digital. All rights reserved.</p>
             <div className="flex">
                 <p className="border-r border-black px-2">Privacy Policy</p>

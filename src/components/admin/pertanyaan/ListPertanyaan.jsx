@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/utils/axiosInstance";
 import Loading from "@/components/Loading";
-export default function ListPertanyaan({ level, setDataDelete, setIsDelete }) {
+export default function ListPertanyaan({ level, isDelete, setDataDelete, setIsDelete }) {
     const router = useRouter()
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -28,11 +28,10 @@ export default function ListPertanyaan({ level, setDataDelete, setIsDelete }) {
     const handleDelete = (data) => {
         setDataDelete(data)
         setIsDelete(true)
-        fetchData()
     }
     useEffect(() => {
         fetchData();
-    }, [halaman]);
+    }, [halaman, isDelete]);
     return (
         <div className="px-5 py-7 overflow-y-scroll h-[80%]">
             <div className="flex items-center gap-5">
