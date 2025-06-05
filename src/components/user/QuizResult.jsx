@@ -54,7 +54,7 @@ export default function QuizResult({ setIsOpen, resultId }) {
                 />
               </svg>
               <p>
-                <span className="text-xl font-bold">{result.total_correct}</span>/20
+                <span className="text-xl font-bold">{result.total_correct}</span>/10
               </p>
             </div>
           </div>

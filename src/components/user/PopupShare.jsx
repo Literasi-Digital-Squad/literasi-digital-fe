@@ -46,7 +46,7 @@ export default function PopupShare({ setIsOpen, linkShare }) {
                     <WhatsappShareButton
                         url={linkShare}
                         title={'Lihatlah nilai pengetahuan literasi digital saya di CakapDigital!'}
-                        separator=". "
+                        separator="\n"
                     >
                         <WhatsappIcon />
                     </WhatsappShareButton>
