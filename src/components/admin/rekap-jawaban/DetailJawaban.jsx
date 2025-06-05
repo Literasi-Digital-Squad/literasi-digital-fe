@@ -15,7 +15,6 @@ export default function DetailJawaban({ resultId, participantId }) {
         try {
             const response = await axiosInstance.get(`/admin/results/${resultId}/question_detail?limit=20`);
             setResults(response.data.data);
-            console.log(response.data.data);
             setLoading(false);
         } catch (err) {
             console.error(err);

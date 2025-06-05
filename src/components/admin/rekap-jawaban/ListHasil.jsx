@@ -6,12 +6,16 @@ import axiosInstance from "@/utils/axiosInstance";
 import Loading from "@/components/Loading";
 export default function ListHasil() {
     const [data, setData] = useState([]);
+    const [totalHalaman, setTotalHalaman] = useState(1);
+    const [halaman, setHalaman] = useState(1);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const fetchData = async () => {
         try {
-            const response = await axiosInstance.get("/admin/results");
+            const response = await axiosInstance.get(`/admin/results?page=${halaman}`);
             setData(response.data.data);
+            setHalaman(response.data.pagination.current_page);
+            setTotalHalaman(response.data.pagination.total_pages);
             setLoading(false);
         } catch (err) {
             setError("Terjadi kesalahan saat mengambil data.");
@@ -20,7 +24,7 @@ export default function ListHasil() {
     };
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [halaman]);
     return (
         <div className="px-5 py-7 overflow-y-scroll h-[80%]">
             <p className="text-2xl font-bold">Rekap Jawaban</p>
@@ -62,39 +66,52 @@ export default function ListHasil() {
                             <p className="text-[#546881]">Silahkan menunggu hasil jawaban dari user</p>
                         </div>
                     ) : (
-                        <div className="overflow-hidden rounded-lg shadow-lg mx-5 mt-7">
-                            <table className="w-full border-collapse bg-white text-left text-sm text-gray-600">
-                                <thead className="bg-[#0A2D61] text-white">
-                                    <tr>
-                                        <th className="px-4 py-5">Nama User</th>
-                                        <th className="px-4 py-5 text-center">Umur</th>
-                                        <th className="px-4 py-5">Email</th>
-                                        <th className="px-4 py-5">Waktu Kuis</th>
-                                        <th className="px-4 py-5 text-center">Result Level</th>
-                                        <th className="px-4 py-5 text-center">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {data.map((hasil) => (
-                                        <tr key={hasil.id} className="hover:bg-gray-100 odd:bg-gray-100 even:bg-white items-center">
-                                            <td className="px-4 py-3">{hasil.participant.name}</td>
-                                            <td className="px-4 py-3 text-center">{hasil.participant.age}</td>
-                                            <td className="px-4 py-3">{hasil.participant.email}</td>
-                                            <td className="px-4 py-3">{hasil.created_at?.split("T")[0]} {hasil.created_at?.split("T")[1]?.split(".")[0]}</td>
-                                            <td className="px-4 py-3 text-center">{hasil.level_result}</td>
-                                            <td className="px-4 py-3">
-                                                <Link href={`/admin/rekap-jawaban/${hasil.id}?participant_id=${hasil.participant.id}`} className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg w-fit cursor-pointer">
-                                                    <p>Detail</p>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                                    </svg>
-                                                </Link>
-                                            </td>
+                        <>
+                            <div className="overflow-hidden rounded-lg shadow-lg mx-5 mt-7">
+                                <table className="w-full border-collapse bg-white text-left text-sm text-gray-600">
+                                    <thead className="bg-[#0A2D61] text-white">
+                                        <tr>
+                                            <th className="px-4 py-5">Nama User</th>
+                                            <th className="px-4 py-5 text-center">Umur</th>
+                                            <th className="px-4 py-5">Email</th>
+                                            <th className="px-4 py-5">Waktu Kuis</th>
+                                            <th className="px-4 py-5 text-center">Result Level</th>
+                                            <th className="px-4 py-5 text-center">Actions</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                    </thead>
+                                    <tbody>
+                                        {data.map((hasil) => (
+                                            <tr key={hasil.id} className="hover:bg-gray-100 odd:bg-gray-100 even:bg-white items-center">
+                                                <td className="px-4 py-3">{hasil.participant.name}</td>
+                                                <td className="px-4 py-3 text-center">{hasil.participant.age}</td>
+                                                <td className="px-4 py-3">{hasil.participant.email}</td>
+                                                <td className="px-4 py-3">{hasil.created_at?.split("T")[0]} {hasil.created_at?.split("T")[1]?.split(".")[0]}</td>
+                                                <td className="px-4 py-3 text-center">{hasil.level_result}</td>
+                                                <td className="px-4 py-3">
+                                                    <Link href={`/admin/rekap-jawaban/${hasil.id}?participant_id=${hasil.participant.id}`} className="flex items-center bg-[#0056D2] space-x-2 text-white px-5 py-3 rounded-lg w-fit cursor-pointer">
+                                                        <p>Detail</p>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                                        </svg>
+                                                    </Link>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="flex justify-center mt-6">
+                                {Array.from({ length: totalHalaman }, (_, i) => (
+                                    <button
+                                        key={i + 1}
+                                        className={`mx-1 px-3 py-1 rounded ${halaman === i + 1 ? 'bg-secondary text-white' : 'bg-gray-200'}`}
+                                        onClick={() => setHalaman(i + 1)}
+                                    >
+                                        {i + 1}
+                                    </button>
+                                ))}
+                            </div>
+                        </>
                     )}
                 </>
             )}
