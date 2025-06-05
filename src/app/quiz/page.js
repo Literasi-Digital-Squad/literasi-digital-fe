@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import Question from "@/components/user/Question"
 import { useQuizStore } from "@/hook/quizStore"
 
-export const maxQuestion = 20
+export const maxQuestion = 10;
 
 export default function Quiz() {
   const { summary } = useQuizStore()
